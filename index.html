@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dinas PUPRP Kabupaten Bintan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+   <style>
+    :root {
+      --navy: #0a1628;
+      --blue: #0d47a1;
+      --blue-mid: #1565c0;
+      --accent: #f5a623;
+      --gold: #e8b84b;
+      --light: #f0f4ff;
+      --white: #ffffff;
+      --text-muted: #8a9bbf;
+      --glass: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 6%;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 22, 40, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    /* PU SVG Logo */
+    .pu-logo {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+
+    .logo-text h1 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+
+    .logo-text span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.25s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+
+    nav a:hover { color: var(--white); }
+    nav a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: white !important; color: var(--navy) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 6%;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(13,71,161,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 20% 80%, rgba(21,101,192,0.2) 0%, transparent 50%),
+        linear-gradient(160deg, #0a1628 0%, #0d1f3c 50%, #0a1628 100%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 60% at 60% 50%, black 30%, transparent 80%);
+    }
+
+    .hero-orb {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,71,161,0.4) 0%, transparent 70%);
+      right: -100px; top: 50%;
+      transform: translateY(-50%);
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    .hero-orb-2 {
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,184,75,0.15) 0%, transparent 70%);
+      right: 200px; top: 30%;
+      animation: pulse 8s ease-in-out infinite 2s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+      50% { transform: translateY(-50%) scale(1.08); opacity: 0.8; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+      animation: fadeUp 1s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeUp 1s ease 0.1s both;
+    }
+
+    .hero-badge span {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+
+    .hero h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 36px;
+      max-width: 500px;
+      animation: fadeUp 1s ease 0.3s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-primary:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(232,184,75,0.3);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--glass-border);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-outline:hover {
+      background: var(--glass);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .hero-image-col {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      animation: fadeUp 1s ease 0.5s both;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-stat-card {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px 28px;
+      min-width: 180px;
+      transition: transform 0.3s;
+    }
+
+    .hero-stat-card:hover { transform: translateY(-3px); }
+
+    .hero-stat-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-stat-card .lbl {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .anggaran-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 4px;
+      padding-left: 4px;
+    }
+
+    .anggaran-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s;
+      min-width: 240px;
+    }
+
+    .anggaran-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(232,184,75,0.4);
+      transform: translateX(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .anggaran-btn.active {
+      background: rgba(232,184,75,0.12);
+      border-color: rgba(232,184,75,0.5);
+    }
+
+    .anggaran-btn.active .anggaran-year { color: var(--gold); }
+
+    .anggaran-icon {
+      font-size: 22px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .anggaran-btn.active .anggaran-icon {
+      background: rgba(232,184,75,0.15);
+    }
+
+    .anggaran-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .anggaran-year {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .anggaran-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .anggaran-arrow {
+      font-size: 16px;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.3s;
+    }
+
+    .anggaran-btn:hover .anggaran-arrow { color: var(--gold); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scrollAnim 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollAnim {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 100px 6%; }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      gap: 30px;
+    }
+
+    /* ─── LAYANAN ─── */
+    #layanan {
+      background: linear-gradient(180deg, var(--navy) 0%, #0d1f3c 100%);
+      position: relative;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      transition: all 0.35s;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s;
+    }
+
+    .service-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(232,184,75,0.25);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .ic-1 { background: rgba(13,71,161,0.3); }
+    .ic-2 { background: rgba(21,101,192,0.3); }
+    .ic-3 { background: rgba(0,121,107,0.3); }
+    .ic-4 { background: rgba(183,28,28,0.25); }
+
+    .service-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .service-card p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+
+    /* ─── STATS TICKER ─── */
+    .stats-bar {
+      background: var(--gold);
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stats-ticker {
+      display: flex;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+    }
+
+    .stats-ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 48px;
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .stats-ticker-item strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+    }
+
+    .stats-ticker-item .dot { width: 4px; height: 4px; background: var(--navy); border-radius: 50%; opacity: 0.4; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── ABOUT / VISI MISI ─── */
+    #profil {
+      background: #0d1f3c;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-card-main {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card-main::after {
+      content: 'PUPRP BIN';
+      position: absolute;
+      right: -10px; bottom: -10px;
+      font-family: 'Playfair Display', serif;
+      font-size: 80px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+    }
+
+    .visi-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      line-height: 1.6;
+      color: white;
+      margin-bottom: 24px;
+    }
+
+    .visi-text em { color: var(--gold); font-style: normal; }
+
+    .misi-list { list-style: none; }
+
+    .misi-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--glass-border);
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    .misi-list li:last-child { border: none; }
+
+    .misi-list li::before {
+      content: '→';
+      color: var(--gold);
+      font-size: 14px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .about-floating {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 16px;
+      padding: 20px 24px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(232,184,75,0.3);
+    }
+
+    .about-floating .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .about-floating .lbl { font-size: 11px; font-weight: 600; margin-top: 4px; }
+
+    /* ─── BERITA ─── */
+    #berita {
+      background: var(--navy);
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .news-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: white;
+      display: block;
+    }
+
+    .news-card:hover { transform: translateY(-4px); border-color: rgba(232,184,75,0.3); }
+
+    .news-card.featured .news-img {
+      height: 240px;
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .news-img-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      opacity: 0.3;
+    }
+
+    .news-img-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    }
+
+    .news-tag {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      display: inline-block;
+    }
+
+    .news-body { padding: 24px; }
+
+    .news-body h3 {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin: 10px 0 8px;
+    }
+
+    .news-body p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+    .news-meta { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 12px; }
+
+    .news-side { display: flex; flex-direction: column; gap: 16px; }
+
+    .news-mini {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: white;
+      display: block;
+    }
+
+    .news-mini:hover { border-color: rgba(232,184,75,0.3); transform: translateX(4px); }
+
+    .news-mini .news-tag { margin-bottom: 8px; }
+    .news-mini h4 { font-size: 13.5px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+    .news-mini p { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+    /* ─── CTA STRIP ─── */
+    .cta-section {
+      padding: 80px 6%;
+      background: linear-gradient(135deg, var(--blue) 0%, #0d47a1 100%);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .cta-section p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .cta-section .btn-primary { position: relative; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #060e1a;
+      padding: 60px 6% 30px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+
+    .footer-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.8;
+    }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: white; }
+
+    .footer-bottom {
+      border-top: 1px solid var(--glass-border);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-image-col { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .news-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      nav { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 0 5%; }
+      section { padding: 70px 5%; }
+    }
+
+    /* ─── REVEAL ANIMATION ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="header-logo">
+
+    <!-- Logo PU -->
+    <img src="assets/logo_pu.jpg" alt="Logo PUPRP Bintan" class="pu-logo">
+
+    <div class="logo-text">
+      <h1>SIMORA PUPRP BINTAN</h1>
+      <span>SISTEM MONITORING REALISASI ANGGARAN</span>
+    </div>
+
+  </a>
+
+  <nav>
+    <a href="#">Beranda</a>
+    <a href="#profil">Profil</a>
+    <a href="#layanan">Layanan</a>
+    <a href="#kontak" class="nav-cta">Kontak Kami</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span></span>
+      DINAS PEKERJAAN UMUM, PENATAAN RUANG DAN PERTANAHAN
+    </div>
+    <h2>Sistem<br><em>Monitoring</em><br>Realisasi Anggaran</h2>
+    <p>Dinas Pekerjaan Umum, Penataan Ruang dan Pertanahan Kabupaten Bintan — berkomitmen dalam pembangunan berkelanjutan dan pelayanan publik yang profesional dan transparan.</p>
+    <div class="hero-btns">
+      <a href="https://sigappu.bintankab.go.id/" class="btn-primary">Lihat Layanan Kami</a>
+      <a href="https://sigappu.bintankab.go.id/" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,8 12,12 14,14"/></svg>
+        Profil Dinas
+      </a>
+    </div>
+  </div>
+
+   <!-- Anggaran Kas Buttons -->
+  <div class="hero-image-col">
+    <div class="anggaran-label">📂 Dokumen Anggaran Kas</div>
+    <a href="https://bit.ly/4aRn7pQ" class="anggaran-btn">
+      <div class="anggaran-icon">📊</div>
+      <div class="anggaran-info">
+        <span class="anggaran-year">Anggaran Kas 2025</span>
+        <span class="anggaran-sub">Dokumen APBD TA 2025</span>
+      </div>
+      <div class="anggaran-arrow">↓</div>
+    </a>
+    <a href="#" class="anggaran-btn active">
+      <div class="anggaran-icon">📊</div>
+      <div class="anggaran-info">
+        <span class="anggaran-year">Anggaran Kas 2026</span>
+        <span class="anggaran-sub">Dokumen APBD TA 2026</span>
+      </div>
+      <div class="anggaran-arrow">↓</div>
+    </a>
+    <a href="#" class="anggaran-btn">
+      <div class="anggaran-icon">📊</div>
+      <div class="anggaran-info">
+        <span class="anggaran-year">Anggaran Kas 2027</span>
+        <span class="anggaran-sub">Dokumen APBD TA 2027</span>
+      </div>
+      <div class="anggaran-arrow">↓</div>
+    </a>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- STATS TICKER -->
+<!-- <div class="stats-bar">
+  <div class="stats-ticker">
+    <div class="stats-ticker-item"><strong>150+</strong> Proyek Infrastruktur <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>20+</strong> Program Strategis <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>100%</strong> Komitmen Pelayanan <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>500km+</strong> Jalan Dibangun <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>50+</strong> Jembatan Dipelihara <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>2026</strong> Tahun Aktif <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>150+</strong> Proyek Infrastruktur <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>20+</strong> Program Strategis <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>100%</strong> Komitmen Pelayanan <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>500km+</strong> Jalan Dibangun <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>50+</strong> Jembatan Dipelihara <span class="dot"></span></div>
+    <div class="stats-ticker-item"><strong>2026</strong> Tahun Aktif <span class="dot"></span></div>
+  </div>
+</div> -->
+
+<!-- LAYANAN -->
+<section id="layanan">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">Layanan Unggulan</div>
+      <h2 class="section-title">Bidang Kerja<br>Kami</h2>
+    </div>
+    <p class="section-sub">Empat bidang utama yang mendukung pembangunan dan pengelolaan wilayah Kabupaten Bintan secara menyeluruh.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <div class="service-icon ic-1">🛣️</div>
+      <h3>Bidang Bina Marga</h3>
+      <p>Pembangunan dan pemeliharaan jalan serta jembatan untuk mendukung konektivitas antar wilayah di Kabupaten Bintan secara optimal dan berkelanjutan.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <div class="service-icon ic-2">🏗️</div>
+      <h3>Cipta Karya</h3>
+      <p>Pengelolaan infrastruktur permukiman, sanitasi, dan bangunan gedung pemerintah demi terwujudnya lingkungan hunian yang layak dan berkualitas.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.3s">
+      <div class="service-icon ic-3">💧</div>
+      <h3>Sumber Daya Air</h3>
+      <p>Pengelolaan, pengembangan, dan pengendalian sumber daya air untuk menjamin ketersediaan air dan keberlanjutan ekosistem lingkungan daerah.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.4s">
+      <div class="service-icon ic-4">🗺️</div>
+      <h3>Penataan Ruang & Pertanahan</h3>
+      <p>Perencanaan tata ruang wilayah yang terintegrasi dan pengelolaan administrasi pertanahan daerah untuk mendukung pembangunan yang tertib dan terencana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROFIL / VISI MISI -->
+<section id="profil">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="section-eyebrow">Tentang Kami</div>
+      <h2 class="section-title">Visi & Misi<br>Dinas PUPRP</h2>
+      <p class="section-sub" style="margin-bottom:0">Menghadirkan infrastruktur yang handal dan tata ruang yang berkelanjutan demi kesejahteraan masyarakat Kabupaten Bintan.</p>
+    </div>
+    <div class="about-visual reveal" style="transition-delay:0.2s">
+      <div class="about-card-main">
+        <div class="visi-text">
+          "Terwujudnya <em>infrastruktur berkualitas</em> yang mendukung pertumbuhan ekonomi dan kesejahteraan masyarakat Bintan."
+        </div>
+        <ul class="misi-list">
+          <li>Meningkatkan kualitas dan jangkauan jaringan jalan serta jembatan</li>
+          <li>Mengembangkan infrastruktur permukiman yang sehat dan layak huni</li>
+          <li>Mengelola sumber daya air secara berkelanjutan dan berkeadilan</li>
+          <li>Mewujudkan tata ruang wilayah yang tertib dan terintegrasi</li>
+          <li>Memberikan pelayanan pertanahan yang transparan dan akuntabel</li>
+        </ul>
+      </div>
+      <div class="about-floating">
+        <div class="num">2026</div>
+        <div class="lbl">Tahun Berjalan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+
+    <!-- BRAND -->
+    <div>
+      <div class="footer-brand">
+        <img src="assets/logo_pu.jpg" 
+     alt="Logo PUPRP Bintan" 
+     style="width:40px; height:40px; object-fit:contain;">
+        <div class="logo-text">
+          <h3>SIMORA PUPRP BINTAN</h3>
+          <span>Sistem Informasi Monitoring Realisasi Anggaran</span>
+        </div>
+      </div>
+
+      <p class="footer-desc">
+        Aplikasi resmi Dinas Pekerjaan Umum, Penataan Ruang dan Pertanahan 
+        Kabupaten Bintan untuk monitoring dan pengelolaan realisasi anggaran 
+        secara transparan, akuntabel, dan terintegrasi.
+        <br><br>
+        📍 Jl. Raya Tanjungpinang – Tanjung Uban, Kabupaten Bintan, Kepulauan Riau
+      </p>
+    </div>
+
+    <!-- MENU -->
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#profil">Profil SIMORA</a></li>
+        <li><a href="#fitur">Fitur Aplikasi</a></li>
+        <li><a href="#laporan">Laporan</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </div>
+
+    <!-- KONTAK -->
+    <div class="footer-col">
+      <h4>Kontak Resmi</h4>
+      <ul>
+        <li>📧 programpuprpbintan@bintankab.go.id</li>
+        <li>📞 (0771) 482-XXXX</li>
+        <li>🌐 <a href="https://bintankab.go.id/" target="_blank">bintankab.go.id</a></li>
+        <li>🕒 Senin - Jumat | 08.00 - 16.00 WIB</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>
+      © 2026 SIMORA PUPRP Bintan — Dinas Pekerjaan Umum, Penataan Ruang dan Pertanahan Kabupaten Bintan.
+    </span>
+    <span>
+      Dikembangkan oleh Tim IT PUPRP Kabupaten Bintan
+    </span>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Header scroll effect
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.style.borderBottomColor = 'rgba(232,184,75,0.2)';
+    } else {
+      header.style.borderBottomColor = 'var(--glass-border)';
+    }
+  });
+</script>
+
+</body>
+</html>
